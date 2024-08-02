@@ -4,7 +4,7 @@ on:
     types: [created]
 jobs:
   sdk-rc:
-    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/sdk')
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/sdk') }}
     env:
       LATEST_COMMENT: ${{ github.event.comment.body }}
     runs-on: ubuntu-latest
