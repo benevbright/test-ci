@@ -1,0 +1,19 @@
+name: sdk rc
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  sdk-rc:
+    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/sdk')
+    env:
+      LATEST_COMMENT: ${{ github.event.comment.body }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".tool-versions"
+          cache: "npm"
+      - run: echo "$LATEST_COMMENT"
+    permissions: write-all
