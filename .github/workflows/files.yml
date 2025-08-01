@@ -37,3 +37,7 @@ jobs:
           echo "count: ${{ steps.count-package-json.outputs.all_changed_files_count }}"
           echo "Changed files: ${{ steps.count-all-files.outputs.all_changed_files }}"
           echo "count: ${{ steps.count-all-files.outputs.all_changed_files_count }}"
+
+      - name: Run if all changed files are package*.json
+        if: steps.count-package-json.outputs.all_changed_files_count == steps.count-all-files.outputs.all_changed_files_count
+        run: echo "All changed files are package*.json"
