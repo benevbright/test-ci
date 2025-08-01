@@ -21,14 +21,19 @@ jobs:
       pull-requests: read
 
     steps:
-      - name: Get changed files
-        id: changed-files
+      - name: Count package*.json files
+        id: count-package-json
+        uses: tj-actions/changed-files@v46.0.5
+        with:
+          files: |
+            package*.json
+      - name: Count all changed files
+        id: count-all-files
         uses: tj-actions/changed-files@v46.0.5
 
-      - name: List all changed files
-        env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      - name: Print changed files
         run: |
-          for file in ${ALL_CHANGED_FILES}; do
-            echo "$file was changed"
-          done
+          echo "Changed package*.json files: ${{ steps.count-package-json.outputs.all_changed_files }}"
+          echo "count: ${{ steps.count-package-json.outputs.all_changed_files_count }}"
+          echo "Changed files: ${{ steps.count-all-files.outputs.all_changed_files }}"
+          echo "count: ${{ steps.count-all-files.outputs.all_changed_files_count }}"
